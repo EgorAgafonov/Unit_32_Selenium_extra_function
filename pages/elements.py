@@ -26,7 +26,7 @@ class WebElement(object):
             self._locator = (str(attr).replace('_', ' '), str(kwargs.get(attr)))
 
     def find(self, timeout=10):
-        """ Find element on the page. """
+        """ Find element on the pages. """
 
         element = None
 
@@ -35,7 +35,7 @@ class WebElement(object):
                EC.presence_of_element_located(self._locator)
             )
         except:
-            print(colored('Element not found on the page!', 'red'))
+            print(colored('Element not found on the pages!', 'red'))
 
         return element
 
@@ -63,7 +63,7 @@ class WebElement(object):
         return element is not None
 
     def is_presented(self):
-        """ Check that element is presented on the page. """
+        """ Check that element is presented on the pages. """
 
         element = self.find(timeout=0.1)
         return element is not None
@@ -184,25 +184,25 @@ class WebElement(object):
             raise AttributeError(msg.format(self._locator))
 
     def highlight_and_make_screenshot(self, file_name='element.png'):
-        """ Highlight element and make the screen-shot of all page. """
+        """ Highlight element and make the screen-shot of all pages. """
 
         element = self.find()
 
-        # Scroll page to the element:
+        # Scroll pages to the element:
         self._web_driver.execute_script("arguments[0].scrollIntoView();", element)
 
         # Add red border to the style:
         self._web_driver.execute_script("arguments[0].style.border='3px solid red'", element)
 
-        # Make screen-shot of the page:
+        # Make screen-shot of the pages:
         self._web_driver.save_screenshot(file_name)
 
     def scroll_to_element(self):
-        """ Scroll page to the element. """
+        """ Scroll pages to the element. """
 
         element = self.find()
 
-        # Scroll page to the element:
+        # Scroll pages to the element:
         # Option #1 to scroll to element:
         # self._web_driver.execute_script("arguments[0].scrollIntoView();", element)
 
@@ -213,7 +213,7 @@ class WebElement(object):
             pass  # Just ignore the error if we can't send the keys to the element
 
     def delete(self):
-        """ Deletes element from the page. """
+        """ Deletes element from the pages. """
 
         element = self.find()
 
@@ -230,7 +230,7 @@ class ManyWebElements(WebElement):
         return elements[item]
 
     def find(self, timeout=10):
-        """ Find elements on the page. """
+        """ Find elements on the pages. """
 
         elements = []
 
@@ -239,7 +239,7 @@ class ManyWebElements(WebElement):
                EC.presence_of_all_elements_located(self._locator)
             )
         except:
-            print(colored('Elements not found on the page!', 'red'))
+            print(colored('Elements not found on the pages!', 'red'))
 
         return elements
 
@@ -287,17 +287,17 @@ class ManyWebElements(WebElement):
         return results
 
     def highlight_and_make_screenshot(self, file_name='element.png'):
-        """ Highlight elements and make the screen-shot of all page. """
+        """ Highlight elements and make the screen-shot of all pages. """
 
         elements = self.find()
 
         for element in elements:
-            # Scroll page to the element:
+            # Scroll pages to the element:
             self._web_driver.execute_script("arguments[0].scrollIntoView();", element)
 
             # Add red border to the style:
             self._web_driver.execute_script("arguments[0].style.border='3px solid red'", element)
 
-        # Make screen-shot of the page:
+        # Make screen-shot of the pages:
         self._web_driver.save_screenshot(file_name)
 

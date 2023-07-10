@@ -19,11 +19,8 @@
 #  pytest -v --driver Remote --capability browserName chrome tests/*
 
 
-import time, pickle
-import pytest
 from pages.petfriends import MainPage
-from pages.elements import ManyWebElements
-from selenium.webdriver.common.action_chains import ActionChains
+
 
 def test_petfriends(web_browser):
     """ Authorize to Petfriends via cookies and create a screenshot when loginpage is successfull. """

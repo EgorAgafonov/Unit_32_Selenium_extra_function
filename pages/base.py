@@ -48,7 +48,7 @@ class WebPage(object):
         self._web_driver.save_screenshot(file_name)
 
     def scroll_down(self, offset=0):
-        """ Scroll the page down. """
+        """ Scroll the pages down. """
 
         if offset:
             self._web_driver.execute_script('window.scrollTo(0, {0});'.format(offset))
@@ -56,7 +56,7 @@ class WebPage(object):
             self._web_driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
 
     def scroll_up(self, offset=0):
-        """ Scroll the page up. """
+        """ Scroll the pages up. """
 
         if offset:
             self._web_driver.execute_script('window.scrollTo(0, -{0});'.format(offset))
@@ -78,18 +78,18 @@ class WebPage(object):
         return self._web_driver.current_url
 
     def get_page_source(self):
-        """ Returns current page body. """
+        """ Returns current pages body. """
 
         source = ''
         try:
             source = self._web_driver.page_source
         except:
-            print(colored('Con not get page source', 'red'))
+            print(colored('Con not get pages source', 'red'))
 
         return source
 
     def check_js_errors(self, ignore_list=None):
-        """ This function checks JS errors on the page. """
+        """ This function checks JS errors on the pages. """
 
         ignore_list = ignore_list or []
 
@@ -102,21 +102,21 @@ class WebPage(object):
                         ignore = True
                         break
 
-                assert ignore, 'JS error "{0}" on the page!'.format(log_message)
+                assert ignore, 'JS error "{0}" on the pages!'.format(log_message)
 
     def wait_page_loaded(self, timeout=60, check_js_complete=True,
                          check_page_changes=False, check_images=False,
                          wait_for_element=None,
                          wait_for_xpath_to_disappear='',
                          sleep_time=2):
-        """ This function waits until the page will be completely loaded.
-            We use many different ways to detect is page loaded or not:
+        """ This function waits until the pages will be completely loaded.
+            We use many different ways to detect is pages loaded or not:
 
             1) Check JS status
-            2) Check modification in source code of the page
+            2) Check modification in source code of the pages
             3) Check that all images uploaded completely
                (Note: this check is disabled by default)
-            4) Check that expected elements presented on the page
+            4) Check that expected elements presented on the pages
         """
 
         page_loaded = False
@@ -126,20 +126,20 @@ class WebPage(object):
         if sleep_time:
             time.sleep(sleep_time)
 
-        # Get source code of the page to track changes in HTML:
+        # Get source code of the pages to track changes in HTML:
         source = ''
         try:
             source = self._web_driver.page_source
         except:
             pass
 
-        # Wait until page loaded (and scroll it, to make sure all objects will be loaded):
+        # Wait until pages loaded (and scroll it, to make sure all objects will be loaded):
         while not page_loaded:
             time.sleep(0.5)
             k += 1
 
             if check_js_complete:
-                # Scroll down and wait when page will be loaded:
+                # Scroll down and wait when pages will be loaded:
                 try:
                     self._web_driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
                     page_loaded = self._web_driver.execute_script("return document.readyState == 'complete';")
@@ -147,7 +147,7 @@ class WebPage(object):
                     pass
 
             if page_loaded and check_page_changes:
-                # Check if the page source was changed
+                # Check if the pages source was changed
                 new_source = ''
                 try:
                     new_source = self._web_driver.page_source
@@ -178,9 +178,9 @@ class WebPage(object):
                 except:
                     pass  # Ignore timeout errors
 
-            assert k < timeout, 'The page loaded more than {0} seconds!'.format(timeout)
+            assert k < timeout, 'The pages loaded more than {0} seconds!'.format(timeout)
 
-            # Check two times that page completely loaded:
+            # Check two times that pages completely loaded:
             if page_loaded and not double_check:
                 page_loaded = False
                 double_check = True

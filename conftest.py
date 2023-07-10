@@ -2,7 +2,7 @@
 # -*- encoding=utf8 -*-
 import allure
 # This is example shows how we can manage failed tests
-# and make screenshots after any failed test case.
+# and make screenshots after any failed tests case.
 
 import pytest
 import uuid
@@ -21,7 +21,7 @@ def chrome_options(chrome_options):
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
 def pytest_runtest_makereport(item, call):
-    # This function helps to detect that some test failed
+    # This function helps to detect that some tests failed
     # and pass this information to teardown:
 
     outcome = yield
@@ -36,13 +36,13 @@ def web_browser(request, selenium):
     browser = selenium
     browser.set_window_size(1400, 1000)
 
-    # Return browser instance to test case:
+    # Return browser instance to tests case:
     yield browser
 
-    # Do teardown (this code will be executed after each test):
+    # Do teardown (this code will be executed after each tests):
 
     if request.node.rep_call.failed:
-        # Make the screen-shot if test failed:
+        # Make the screen-shot if tests failed:
         try:
             browser.execute_script("document.body.bgColor = 'white';")
 
@@ -65,8 +65,8 @@ def web_browser(request, selenium):
 
 
 def get_test_case_docstring(item):
-    """ This function gets doc string from test case and format it
-        to show this docstring instead of the test case name in reports.
+    """ This function gets doc string from tests case and format it
+        to show this docstring instead of the tests case name in reports.
     """
 
     full_name = ''
@@ -76,14 +76,14 @@ def get_test_case_docstring(item):
         name = str(item._obj.__doc__.split('.')[0]).strip()
         full_name = ' '.join(name.split())
 
-        # Generate the list of parameters for parametrized test cases:
+        # Generate the list of parameters for parametrized tests cases:
         if hasattr(item, 'callspec'):
             params = item.callspec.params
 
             res_keys = sorted([k for k in params])
             # Create List based on Dict:
             res = ['{0}_"{1}"'.format(k, params[k]) for k in res_keys]
-            # Add dict with all parameters to the name of test case:
+            # Add dict with all parameters to the name of tests case:
             full_name += ' Parameters ' + str(', '.join(res))
             full_name = full_name.replace(':', '')
 
@@ -91,8 +91,8 @@ def get_test_case_docstring(item):
 
 
 def pytest_itemcollected(item):
-    """ This function modifies names of test cases "on the fly"
-        during the execution of test cases.
+    """ This function modifies names of tests cases "on the fly"
+        during the execution of tests cases.
     """
 
     if item._obj.__doc__:
@@ -100,16 +100,16 @@ def pytest_itemcollected(item):
 
 
 def pytest_collection_finish(session):
-    """ This function modified names of test cases "on the fly"
+    """ This function modified names of tests cases "on the fly"
         when we are using --collect-only parameter for pytest
-        (to get the full list of all existing test cases).
+        (to get the full list of all existing tests cases).
     """
 
     if session.config.option.collectonly is True:
         for item in session.items:
-            # If test case has a doc string we need to modify it's name to
+            # If tests case has a doc string we need to modify it's name to
             # it's doc string to show human-readable reports and to
-            # automatically import test cases to test management system.
+            # automatically import tests cases to tests management system.
             if item._obj.__doc__:
                 full_name = get_test_case_docstring(item)
                 print(full_name)
