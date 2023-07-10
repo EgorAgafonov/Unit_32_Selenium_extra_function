@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- encoding=utf8 -*-
 
-import os,pickle
+import os, pickle
 
 from pages.base import WebPage
 from pages.elements import WebElement
@@ -12,7 +12,7 @@ class MainPage(WebPage):
 
     def __init__(self, web_driver, url=''):
         if not url:
-            url = os.getenv("MAIN_URL") or 'https://petfriends1.herokuapp.com/'
+            url = os.getenv("MAIN_URL") or 'https://petfriends.skillfactory.ru'
 
         super().__init__(web_driver, url)
         with open('my_cookies.txt', 'rb') as cookiesfile:

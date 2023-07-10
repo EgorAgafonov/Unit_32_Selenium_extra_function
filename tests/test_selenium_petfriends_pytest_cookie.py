@@ -19,7 +19,7 @@
 #  pytest -v --driver Remote --capability browserName chrome tests/*
 
 
-#import time, pickle
+import time, pickle
 import pytest
 from pages.petfriends import MainPage
 from pages.elements import ManyWebElements
